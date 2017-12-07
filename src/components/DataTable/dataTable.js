@@ -159,37 +159,18 @@ class Table extends Component {
         /* Formatting function for row details - modify as you need */
         function format ( d ) {
             // `d` is the original data object for the row
-            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-                '<tr>'+
-                '<td>Full name:</td>'+
-                '<td>'+d.name+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>Extension number:</td>'+
-                '<td>'+d.extn+'</td>'+
-                '</tr>'+
-                '<tr>'+
-                '<td>Extra info:</td>'+
-                '<td>And any further details here (images etc)...</td>'+
-                '</tr>'+
-                '</table>';
-
-            // return (
-            //     <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">
-            //         <tr>
-            //             <td>Full name:</td>
-            //             <td>{'Rajat Sharma'}</td>
-            //         </tr>
-            //         <tr>
-            //             <td>Extension number:</td>
-            //             <td>{'011'}</td>
-            //         </tr>
-            //         <tr>
-            //             <td>Extra info:</td>
-            //             <td>And any further details here (images etc)...</td>
-            //         </tr>
-            //     </table>
-            // )
+            return `
+                <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">
+                    <tr>
+                    <td>First Name:</td>
+                    <td>${d.firstname}</td>
+                    </tr>
+                    <tr>
+                    <td>Last Name:</td>
+                    <td>${d.lastname}</td>
+                    </tr>
+                </table>
+            `;
         }
 
 
@@ -241,7 +222,6 @@ class Table extends Component {
 
     render() {
         return (
-            <div style={{width:'90%', margin:'0 auto'}}>
                 {/*<button ref="addRow">Add New Row</button>*/}
                 {/*<button ref="replaceData">Replace Data</button>*/}
                 <table ref="main" className="hover row-border">
