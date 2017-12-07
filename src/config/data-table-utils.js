@@ -17,3 +17,7 @@ import 'datatables.net-rowreorder';
 import 'jszip';
 import 'pdfmake/build/pdfmake'; // required for generating pdf
 import 'pdfmake/build/vfs_fonts'; // required for generating pdf
+
+
+//Import custom CSS
+import '../components/DataTable/dataTable.css';
