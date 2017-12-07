@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './assets/Customer_MRR.png';
-import Table from './components/Table';
+import Table from './components/DataTable/dataTable';
 import NavBar from './components/NavBar/navBar';
 import './assets/fonts/fonts.css';
 import './App.css';

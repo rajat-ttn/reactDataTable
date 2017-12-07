@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 
 // import datatable CSS
-import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css';
+import '../../../node_modules/datatables.net-dt/css/jquery.dataTables.css';
 import 'datatables.net-buttons-dt/css/buttons.dataTables.css';
 import 'datatables.net-fixedheader-dt/css/fixedHeader.dataTables.css';
 import 'datatables.net-rowreorder-dt/css/rowReorder.dataTables.css';
+
+//Import custom CSS
+import './dataTable.css';
 
 // import datatable dependencies
 import $ from 'jquery';
@@ -36,7 +39,7 @@ import 'datatables.net-fixedheader';
 import 'datatables.net-rowreorder';
 
 
-const data  = require('../data/tableData.json')['gps_vs_manual'];
+const data  = require('../../data/tableData.json')['gps_vs_manual'];
 
 data.map(function(item, index){
    item.index  = index;
@@ -46,28 +49,53 @@ data.map(function(item, index){
 const columns = [
     {
         title: 'Index',
-        width: 120,
+        width: 25,
         data: 'index'
     },
     {
         title: 'Period Id',
-        width: 120,
+        width: 100,
         data: 'periodid'
     },
     {
         title: 'First Name',
-        width: 180,
+        width: 130,
         data: 'firstname'
     },
     {
         title: 'GPS Count',
-        width: 180,
+        width: 100,
         data: 'gpscount'
     },
     {
         title: 'Total',
-        width: 180,
+        width: 80,
         data: 'total'
+    },
+    {
+        title: 'Period Name',
+        width: 130,
+        data: 'periodname'
+    },
+    {
+        title: 'Person Id',
+        width: 120,
+        data: 'personid'
+    },
+    {
+        title: 'Manual Count',
+        width: 130,
+        data: 'manualcount'
+    },
+    {
+        title: 'Program Id',
+        width: 120,
+        data: 'programid'
+    },
+    {
+        title: 'Last Name',
+        width: 120,
+        data: 'lastname'
     },
     {
         title: 'Program Name',
@@ -75,40 +103,15 @@ const columns = [
         data: 'programname'
     },
     {
+        title: 'User Name',
+        width: 120,
+        data: 'username'
+    },
+    {
         title: 'Client Employee Id',
         width: 180,
         data: 'clientemployeeid'
     },
-    {
-        title: 'Period Name',
-        width: 180,
-        data: 'periodname'
-    },
-    {
-        title: 'Person Id',
-        width: 180,
-        data: 'personid'
-    },
-    {
-        title: 'Manual Count',
-        width: 180,
-        data: 'manualcount'
-    },
-    {
-        title: 'Program Id',
-        width: 180,
-        data: 'programid'
-    },
-    {
-        title: 'Last Name',
-        width: 180,
-        data: 'lastname'
-    },
-    {
-        title: 'User Name',
-        width: 180,
-        data: 'username'
-    }
 ];
 
 class Table extends Component {
@@ -178,7 +181,7 @@ class Table extends Component {
             <div style={{width:'90%', margin:'0 auto'}}>
                 {/*<button ref="addRow">Add New Row</button>*/}
                 {/*<button ref="replaceData">Replace Data</button>*/}
-                <table ref="main" className="display cell-border">
+                <table ref="main" className="hover row-border">
                 </table>
             </div>);
     }
