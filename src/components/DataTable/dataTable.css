@@ -543,3 +543,8 @@ a#DataTables_Table_0_next {
     background: #279dfa;
     color: #fff !important;
 }
+
+table.dataTable.hover tbody tr table tbody   tr:hover, table.dataTable.hover tbody tr table tbody   tr {
+    background: none;
+    box-shadow: none;
+}
