@@ -140,7 +140,6 @@ class Table extends Component {
 
         // Add event listener for opening and closing details
         $(this.refs.main).on('click', 'td.details-control', function () {
-            alert('hi');
             var tr = $(this).closest('tr');
             var row = dataTable.row( tr );
 
