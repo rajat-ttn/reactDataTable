@@ -113,7 +113,7 @@ const columns = [
 
 class Table extends Component {
     componentDidMount() {
-        $(this.refs.main).DataTable({
+        let dataTable = $(this.refs.main).DataTable({
             dom: 'Blfrtip',
             buttons: [
                 'colvis',  'copy', 'excel', 'pdf', 'csv', 'print'
@@ -126,13 +126,44 @@ class Table extends Component {
                 dataSrc: 'index'
             }
         });
+
+        let newData = [{
+            "periodid": 92689,
+            "firstname": "Peter",
+            "gpscount": 0,
+            "total": 2,
+            "programname": "Ford Focus-Account Developers",
+            "clientemployeeid": "ccbb59742dc91f14784bd3a073304b57",
+            "periodname": "Nov 2017",
+            "personid": 40139,
+            "manualcount": 2,
+            "programid": 1082,
+            "lastname": "Lyday",
+            "username": "260495"
+        }];
+        this.addRow(dataTable, newData);
+        this.replaceTable(dataTable, newData);
     }
+
+    addRow(dataTable, data) {
+        $(this.refs.addRow).on("click",function () {
+            dataTable.rows.add(data).draw( false );
+        });
+    }
+
+    replaceTable(dataTable, data) {
+        $(this.refs.replaceData).on("click",function () {
+            dataTable.clear().rows.add(data).draw( true );
+        });
+    }
+
     componentWillUnmount(){
         $('.data-table-wrapper')
             .find('table')
             .DataTable()
             .destroy(true);
     }
+
     shouldComponentUpdate(nextProps) {
         if (nextProps.names.length !== this.props.names.length) {
             reloadTableData(nextProps.names);
@@ -141,9 +172,12 @@ class Table extends Component {
         }
         return false;
     }
+
     render() {
         return (
             <div style={{width:'90%', margin:'0 auto'}}>
+                {/*<button ref="addRow">Add New Row</button>*/}
+                {/*<button ref="replaceData">Replace Data</button>*/}
                 <table ref="main" className="display cell-border">
                 </table>
             </div>);
