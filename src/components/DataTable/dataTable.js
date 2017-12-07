@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import '../config/data-table-utils';
-import { columns } from '../config/data-table-config';
-
-const data  = require('../data/tableData.json')['gps_vs_manual'];
+import '../../config/data-table-utils';
+import { DT_CONFIG } from '../../config/data-table-config';
+const data  = require('../../data/tableData.json')['gps_vs_manual'];
 
 data.map(function(item, index){
    item.index  = index;
@@ -11,49 +10,43 @@ data.map(function(item, index){
 });
 
 class Table extends Component {
+
     componentDidMount() {
-        let dataTable = $(this.refs.main).DataTable({
-            dom: 'Blfrtip',
-            buttons: [
-                'colvis',  'copy', 'excel', 'pdf', 'csv', 'print'
-            ],
-            data: data,
-            columns,
-            "scrollX": true,
-            fixedHeader:true,
-            rowReorder: {
-                dataSrc: 'index'
+        let dataTable = $(this.refs.main).DataTable(DT_CONFIG(data));
+
+        // Add event listener for opening and closing details
+        $(this.refs.main).on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = dataTable.row( tr );
+
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
             }
-        });
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
+        } );
 
-        let newData = [{
-            "periodid": 92689,
-            "firstname": "Peter",
-            "gpscount": 0,
-            "total": 2,
-            "programname": "Ford Focus-Account Developers",
-            "clientemployeeid": "ccbb59742dc91f14784bd3a073304b57",
-            "periodname": "Nov 2017",
-            "personid": 40139,
-            "manualcount": 2,
-            "programid": 1082,
-            "lastname": "Lyday",
-            "username": "260495"
-        }];
-        this.addRow(dataTable, newData);
-        this.replaceTable(dataTable, newData);
-    }
-
-    addRow(dataTable, data) {
-        $(this.refs.addRow).on("click",function () {
-            dataTable.rows.add(data).draw( false );
-        });
-    }
-
-    replaceTable(dataTable, data) {
-        $(this.refs.replaceData).on("click",function () {
-            dataTable.clear().rows.add(data).draw( true );
-        });
+        /* Formatting function for row details - modify as you need */
+        function format ( d ) {
+            // `d` is the original data object for the row
+            return `
+                <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">
+                    <tr>
+                    <td>First Name:</td>
+                    <td>${d.firstname}</td>
+                    </tr>
+                    <tr>
+                    <td>Last Name:</td>
+                    <td>${d.lastname}</td>
+                    </tr>
+                </table>
+            `;
+        }
     }
 
     componentWillUnmount(){
@@ -75,9 +68,9 @@ class Table extends Component {
     render() {
         return (
             <div style={{width:'90%', margin:'0 auto'}}>
-                <button ref="addRow">Add New Row</button>
-                <button ref="replaceData">Replace Data</button>
-                <table ref="main" className="display cell-border">
+                {/*<button ref="addRow">Add New Row</button>*/}
+                {/*<button ref="replaceData">Replace Data</button>*/}
+                <table ref="main" className="hover row-border">
                 </table>
             </div>);
     }

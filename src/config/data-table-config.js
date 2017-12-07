@@ -1,4 +1,10 @@
-export const columns = [
+const columns = [
+        {
+            "className":      'details-control',
+            "orderable":      false,
+            "data":           null,
+            "defaultContent": ''
+        },
         {
             title: 'Index',
             width: 120,
@@ -65,3 +71,19 @@ export const columns = [
             data: 'username'
         }
 ];
+
+export function DT_CONFIG (data) {
+    return {
+        dom: 'Blfrtip',
+        buttons: [
+            'colvis', 'copy', 'excel', 'pdf', 'csv', 'print'
+        ],
+        data: data,
+        columns,
+        "scrollX": true,
+        fixedHeader: false,
+        // rowReorder: {
+        //     dataSrc: 'index'
+        // }
+    }
+};
