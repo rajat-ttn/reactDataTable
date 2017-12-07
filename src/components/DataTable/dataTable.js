@@ -222,6 +222,7 @@ class Table extends Component {
 
     render() {
         return (
+            <div style={{width:'90%', margin:'0 auto'}}>
                 {/*<button ref="addRow">Add New Row</button>*/}
                 {/*<button ref="replaceData">Replace Data</button>*/}
                 <table ref="main" className="hover row-border">
