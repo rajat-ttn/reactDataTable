@@ -478,6 +478,13 @@ table.dataTable td {
     }
 }
 
+td.details-control {
+    background: url('../../assets/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('../../assets/details_close.png') no-repeat center center;
+}
 button.dt-button, div.dt-button, a.dt-button, button.dt-button{
     background: #e6f0f9;
     border: solid 1px #609fc5;
