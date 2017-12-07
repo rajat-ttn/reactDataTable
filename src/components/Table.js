@@ -1,40 +1,7 @@
 import React, { Component } from 'react';
-
-// import datatable CSS
-import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css';
-import 'datatables.net-buttons-dt/css/buttons.dataTables.css';
-import 'datatables.net-fixedheader-dt/css/fixedHeader.dataTables.css';
-import 'datatables.net-rowreorder-dt/css/rowReorder.dataTables.css';
-
-// import datatable dependencies
 import $ from 'jquery';
-import 'jszip';
-import 'pdfmake/build/pdfmake'; // required for generating pdf
-import 'pdfmake/build/vfs_fonts'; // required for generating pdf
-
-
-// import datatable
-import 'datatables.net';
-
-// import datatable buttons
-import 'datatables.net-buttons';
-
-// import datatable buttons - column visibility
-import 'datatables.net-buttons/js/buttons.colVis.js';
-//import 'datatables.net-buttons/js/buttons.flash.js';
-
-//Copy to clipboard and create Excel, PDF and CSV files from the table's data.
-import 'datatables.net-buttons/js/buttons.html5.js';
-
-//Button that will display a printable view of the table.
-import 'datatables.net-buttons/js/buttons.print.js';
-
-//Sticky header and / or footer for the table.
-import 'datatables.net-fixedheader';
-
-//Click-and-drag reordering of rows.
-import 'datatables.net-rowreorder';
-
+import '../config/data-table-utils';
+import { columns } from '../config/data-table-config';
 
 const data  = require('../data/tableData.json')['gps_vs_manual'];
 
@@ -42,74 +9,6 @@ data.map(function(item, index){
    item.index  = index;
    return item;
 });
-
-const columns = [
-    {
-        title: 'Index',
-        width: 120,
-        data: 'index'
-    },
-    {
-        title: 'Period Id',
-        width: 120,
-        data: 'periodid'
-    },
-    {
-        title: 'First Name',
-        width: 180,
-        data: 'firstname'
-    },
-    {
-        title: 'GPS Count',
-        width: 180,
-        data: 'gpscount'
-    },
-    {
-        title: 'Total',
-        width: 180,
-        data: 'total'
-    },
-    {
-        title: 'Program Name',
-        width: 180,
-        data: 'programname'
-    },
-    {
-        title: 'Client Employee Id',
-        width: 180,
-        data: 'clientemployeeid'
-    },
-    {
-        title: 'Period Name',
-        width: 180,
-        data: 'periodname'
-    },
-    {
-        title: 'Person Id',
-        width: 180,
-        data: 'personid'
-    },
-    {
-        title: 'Manual Count',
-        width: 180,
-        data: 'manualcount'
-    },
-    {
-        title: 'Program Id',
-        width: 180,
-        data: 'programid'
-    },
-    {
-        title: 'Last Name',
-        width: 180,
-        data: 'lastname'
-    },
-    {
-        title: 'User Name',
-        width: 180,
-        data: 'username'
-    }
-];
 
 class Table extends Component {
     componentDidMount() {
@@ -121,7 +20,7 @@ class Table extends Component {
             data: data,
             columns,
             "scrollX": true,
-            fixedHeader:false,
+            fixedHeader:true,
             rowReorder: {
                 dataSrc: 'index'
             }
@@ -176,8 +75,8 @@ class Table extends Component {
     render() {
         return (
             <div style={{width:'90%', margin:'0 auto'}}>
-                {/*<button ref="addRow">Add New Row</button>*/}
-                {/*<button ref="replaceData">Replace Data</button>*/}
+                <button ref="addRow">Add New Row</button>
+                <button ref="replaceData">Replace Data</button>
                 <table ref="main" className="display cell-border">
                 </table>
             </div>);
