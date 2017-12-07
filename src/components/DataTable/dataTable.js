@@ -48,6 +48,12 @@ data.map(function(item, index){
 
 const columns = [
     {
+        "className":      'details-control',
+        "orderable":      false,
+        "data":           null,
+        "defaultContent": ''
+    },
+    {
         title: 'Index',
         width: 25,
         data: 'index'
@@ -114,51 +120,108 @@ const columns = [
     },
 ];
 
+const dtConfig = {
+    dom: 'Blfrtip',
+    buttons: [
+        'colvis',  'copy', 'excel', 'pdf', 'csv', 'print'
+    ],
+    data: data,
+    columns,
+    "scrollX": true,
+    fixedHeader:false,
+    // rowReorder: {
+    //     dataSrc: 'index'
+    // }
+}
+
 class Table extends Component {
     componentDidMount() {
-        let dataTable = $(this.refs.main).DataTable({
-            dom: 'Blfrtip',
-            buttons: [
-                'colvis',  'copy', 'excel', 'pdf', 'csv', 'print'
-            ],
-            data: data,
-            columns,
-            "scrollX": true,
-            fixedHeader:false,
-            rowReorder: {
-                dataSrc: 'index'
+        let dataTable = $(this.refs.main).DataTable(dtConfig);
+
+        // Add event listener for opening and closing details
+        $(this.refs.main).on('click', 'td.details-control', function () {
+            alert('hi');
+            var tr = $(this).closest('tr');
+            var row = dataTable.row( tr );
+
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
             }
-        });
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
+        } );
 
-        let newData = [{
-            "periodid": 92689,
-            "firstname": "Peter",
-            "gpscount": 0,
-            "total": 2,
-            "programname": "Ford Focus-Account Developers",
-            "clientemployeeid": "ccbb59742dc91f14784bd3a073304b57",
-            "periodname": "Nov 2017",
-            "personid": 40139,
-            "manualcount": 2,
-            "programid": 1082,
-            "lastname": "Lyday",
-            "username": "260495"
-        }];
-        this.addRow(dataTable, newData);
-        this.replaceTable(dataTable, newData);
+        /* Formatting function for row details - modify as you need */
+        function format ( d ) {
+            // `d` is the original data object for the row
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+                '<tr>'+
+                '<td>Full name:</td>'+
+                '<td>'+d.name+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>Extension number:</td>'+
+                '<td>'+d.extn+'</td>'+
+                '</tr>'+
+                '<tr>'+
+                '<td>Extra info:</td>'+
+                '<td>And any further details here (images etc)...</td>'+
+                '</tr>'+
+                '</table>';
+
+            // return (
+            //     <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">
+            //         <tr>
+            //             <td>Full name:</td>
+            //             <td>{'Rajat Sharma'}</td>
+            //         </tr>
+            //         <tr>
+            //             <td>Extension number:</td>
+            //             <td>{'011'}</td>
+            //         </tr>
+            //         <tr>
+            //             <td>Extra info:</td>
+            //             <td>And any further details here (images etc)...</td>
+            //         </tr>
+            //     </table>
+            // )
+        }
+
+
+        // let newData = [{
+        //     "periodid": 92689,
+        //     "firstname": "Peter",
+        //     "gpscount": 0,
+        //     "total": 2,
+        //     "programname": "Ford Focus-Account Developers",
+        //     "clientemployeeid": "ccbb59742dc91f14784bd3a073304b57",
+        //     "periodname": "Nov 2017",
+        //     "personid": 40139,
+        //     "manualcount": 2,
+        //     "programid": 1082,
+        //     "lastname": "Lyday",
+        //     "username": "260495"
+        // }];
+        // this.addRow(dataTable, newData);
+        // this.replaceTable(dataTable, newData);
     }
 
-    addRow(dataTable, data) {
-        $(this.refs.addRow).on("click",function () {
-            dataTable.rows.add(data).draw( false );
-        });
-    }
-
-    replaceTable(dataTable, data) {
-        $(this.refs.replaceData).on("click",function () {
-            dataTable.clear().rows.add(data).draw( true );
-        });
-    }
+    // addRow(dataTable, data) {
+    //     $(this.refs.addRow).on("click",function () {
+    //         dataTable.rows.add(data).draw( false );
+    //     });
+    // }
+    //
+    // replaceTable(dataTable, data) {
+    //     $(this.refs.replaceData).on("click",function () {
+    //         dataTable.clear().rows.add(data).draw( true );
+    //     });
+    // }
 
     componentWillUnmount(){
         $('.data-table-wrapper')

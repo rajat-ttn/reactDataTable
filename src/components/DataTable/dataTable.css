@@ -477,3 +477,11 @@ table.dataTable td {
         margin-top: 0.5em;
     }
 }
+
+td.details-control {
+    background: url('../../assets/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('../../assets/details_close.png') no-repeat center center;
+}
