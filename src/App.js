@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import logo from './assets/motusLogo.jpeg';
+import logo from './assets/Customer_MRR.png';
 import Table from './components/Table';
+import NavBar from './components/NavBar/navBar';
+import './assets/fonts/fonts.css';
 import './App.css';
 
 
@@ -8,12 +10,16 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Data Table</h1>
+      <div className="container">
+        <header className="container-header">
+            <div className="container-header-logo">
+                <img src={logo} alt="logo" />
+            </div>
+            <div className="container-header-nav">
+               <NavBar></NavBar>
+            </div>
         </header>
-        <p className="App-intro">
+        <p className="container-intro">
         </p>
         <Table></Table>
       </div>
