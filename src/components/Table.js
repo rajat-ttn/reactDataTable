@@ -1,13 +1,54 @@
 import React, { Component } from 'react';
 
+// import datatable CSS
 import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css';
+import 'datatables.net-buttons-dt/css/buttons.dataTables.css';
+import 'datatables.net-fixedheader-dt/css/fixedHeader.dataTables.css';
+import 'datatables.net-rowreorder-dt/css/rowReorder.dataTables.css';
 
-const $  = require( 'jquery' );
-$.DataTable = require( 'datatables.net' );
+// import datatable dependencies
+import $ from 'jquery';
+import 'jszip';
+import 'pdfmake/build/pdfmake'; // required for generating pdf
+import 'pdfmake/build/vfs_fonts'; // required for generating pdf
+
+
+// import datatable
+import 'datatables.net';
+
+// import datatable buttons
+import 'datatables.net-buttons';
+
+// import datatable buttons - column visibility
+import 'datatables.net-buttons/js/buttons.colVis.js';
+//import 'datatables.net-buttons/js/buttons.flash.js';
+
+//Copy to clipboard and create Excel, PDF and CSV files from the table's data.
+import 'datatables.net-buttons/js/buttons.html5.js';
+
+//Button that will display a printable view of the table.
+import 'datatables.net-buttons/js/buttons.print.js';
+
+//Sticky header and / or footer for the table.
+import 'datatables.net-fixedheader';
+
+//Click-and-drag reordering of rows.
+import 'datatables.net-rowreorder';
+
 
 const data  = require('../data/tableData.json')['gps_vs_manual'];
 
+data.map(function(item, index){
+   item.index  = index;
+   return item;
+});
+
 const columns = [
+    {
+        title: 'Index',
+        width: 120,
+        data: 'index'
+    },
     {
         title: 'Period Id',
         width: 120,
@@ -73,9 +114,17 @@ const columns = [
 class Table extends Component {
     componentDidMount() {
         $(this.refs.main).DataTable({
+            dom: 'Blfrtip',
+            buttons: [
+                'colvis',  'copy', 'excel', 'pdf', 'csv', 'print'
+            ],
             data: data,
             columns,
-            "scrollX": true
+            "scrollX": true,
+            fixedHeader:false,
+            rowReorder: {
+                dataSrc: 'index'
+            }
         });
     }
     componentWillUnmount(){
@@ -84,7 +133,12 @@ class Table extends Component {
             .DataTable()
             .destroy(true);
     }
-    shouldComponentUpdate() {
+    shouldComponentUpdate(nextProps) {
+        if (nextProps.names.length !== this.props.names.length) {
+            reloadTableData(nextProps.names);
+        } else {
+            updateTable(nextProps.names);
+        }
         return false;
     }
     render() {
@@ -94,6 +148,38 @@ class Table extends Component {
                 </table>
             </div>);
     }
+}
+
+function updateTable(names) {
+    const table = $('.data-table-wrapper')
+        .find('table')
+        .DataTable();
+    let dataChanged = false;
+    table.rows().every(function () {
+        const oldNameData = this.data();
+        const newNameData = names.find((nameData) => {
+            return nameData.name === oldNameData.name;
+        });
+        if (oldNameData.nickname !== newNameData.nickname) {
+            dataChanged = true;
+            this.data(newNameData);
+        }
+        return true; // RCA esLint configuration wants us to
+                     // return something
+    });
+
+    if (dataChanged) {
+        table.draw();
+    }
+}
+
+function reloadTableData(names) {
+    const table = $('.data-table-wrapper')
+        .find('table')
+        .DataTable();
+    table.clear();
+    table.rows.add(names);
+    table.draw();
 }
 
 export default Table;
