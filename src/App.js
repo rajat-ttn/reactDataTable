@@ -6,6 +6,8 @@ import './assets/fonts/fonts.css';
 import './App.css';
 
 
+import { DT_CONFIG } from './config/data-table-config';
+const data  = require('./data/tableData.json')['gps_vs_manual'];
 
 class App extends Component {
   render() {
@@ -19,9 +21,14 @@ class App extends Component {
                <NavBar></NavBar>
             </div>
         </header>
-        <p className="container-intro">
-        </p>
-        <Table></Table>
+
+        <Table
+         tableConfig={DT_CONFIG}
+         tableData={data}
+         toggleRow={[{key: 'firstname', title:'First Name'},{key:'lastname', title:'Last Name:'}]}
+        />
+
+
       </div>
     );
   }

@@ -62,7 +62,6 @@ const columns = [
 
 columns.map(function(item, index){
     item.width = item.title && item.title.length * 10;
-    console.log(item.width)
     return item;
 });
 

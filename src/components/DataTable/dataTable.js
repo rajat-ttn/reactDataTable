@@ -1,18 +1,44 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import '../../config/data-table-utils';
-import { DT_CONFIG } from '../../config/data-table-config';
 const data  = require('../../data/tableData.json')['gps_vs_manual'];
 
-data.map(function(item, index){
-   item.index  = index;
-   return item;
-});
-
 class Table extends Component {
+    constructor(props){
+        super(props);
+
+        this.tableConfig = props.tableConfig;
+        this.tableData = props.tableData;
+        this.toggle = props.toggleRow;
+    }
 
     componentDidMount() {
-        let dataTable = $(this.refs.main).DataTable(DT_CONFIG(data));
+
+        //Table config props should be must
+        if(!this.tableConfig){
+            return;
+        }
+
+        //Re indexing the table data
+        this.tableData.map(function(item, index){
+            item.index  = index;
+            return item;
+        });
+
+        //Creating the table with table config and table data
+        let dataTable = $(this.refs.main).DataTable(this.tableConfig(this.tableData));
+
+        this.toggle &&  this.tableRowDetailView(dataTable);
+    }
+
+
+    /**
+     * Table row Toggle view
+     * @param dataTable
+     */
+    tableRowDetailView(dataTable){
+
+        let toggle = this.toggle;
 
         // Add event listener for opening and closing details
         $(this.refs.main).on('click', 'td.details-control', function () {
@@ -26,26 +52,26 @@ class Table extends Component {
             }
             else {
                 // Open this row
-                row.child( format(row.data()) ).show();
+                row.child( format(row.data(), toggle)).show();
                 tr.addClass('shown');
             }
         } );
 
         /* Formatting function for row details - modify as you need */
-        function format ( d ) {
-            // `d` is the original data object for the row
-            return `
-                <table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">
-                    <tr>
-                    <td>First Name:</td>
-                    <td>${d.firstname}</td>
-                    </tr>
-                    <tr>
-                    <td>Last Name:</td>
-                    <td>${d.lastname}</td>
-                    </tr>
-                </table>
-            `;
+        function format ( d, toggle ) {
+
+            let table = $(`<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;"></table>`);
+
+            let toggleUI = toggle.map((data, index)=>{
+                return `<tr>
+                            <td>${data.title} : </td>
+                            <td>${d[data.key]}</td>
+                        </tr>`;
+            });
+
+            table.append(toggleUI);
+            return table;
+
         }
     }
 
