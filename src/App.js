@@ -25,7 +25,7 @@ class App extends Component {
         <Table
          tableConfig={DT_CONFIG}
          tableData={data}
-         toggleRow={[{key: 'firstname', title:'First Name'},{key:'lastname', title:'Last Name:'}]}
+         toggleRow={[{key: 'firstname', title:'First Name'},{key:'lastname', title:'Last Name'}]}
         />
       </div>
     );

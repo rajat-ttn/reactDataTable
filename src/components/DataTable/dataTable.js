@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import $ from 'jquery';
 
 class Table extends Component {
@@ -57,18 +58,20 @@ class Table extends Component {
         /* Formatting function for row details - modify as you need */
         function format ( d, toggle ) {
 
-            let table = $(`<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;"></table>`);
-
             let toggleUI = toggle.map((data, index)=>{
-                return `<tr>
-                            <td>${data.title} : </td>
-                            <td>${d[data.key]}</td>
-                        </tr>`;
+                return (<tr key={data.title}>
+                            <td>{data.title} : </td>
+                            <td>{d[data.key]}</td>
+                        </tr>);
             });
 
-            table.append(toggleUI);
-            return table;
-
+            return ReactDOMServer.renderToStaticMarkup(
+                (
+                    <table cellPadding={'5'} cellSpacing={'0'} border={'0'} style={{paddingLeft:'50px'}}>
+                        {toggleUI}
+                    </table>
+                )
+            );
         }
     }
 
