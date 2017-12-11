@@ -93,6 +93,7 @@ export function DT_CONFIG (data) {
         ],
         data: data,
         columns,
-        scrollX: true
+        scrollX: true,
+        order: [[1, 'asc']]
     }
 };
