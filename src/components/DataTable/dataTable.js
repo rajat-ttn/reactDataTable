@@ -17,12 +17,6 @@ class Table extends Component {
             return;
         }
 
-        //Re indexing the table data
-        this.tableData.map(function(item, index){
-            item.index  = index;
-            return item;
-        });
-
         //Creating the table with table config and table data
         let dataTable = $(this.refs.main).DataTable(this.tableConfig(this.tableData));
 

@@ -7,10 +7,6 @@ const columns = [
             defaultContent: ''
         },
         {
-            title: 'Index',
-            data: 'index'
-        },
-        {
             title: 'Period Id',
             data: 'periodid'
         },
