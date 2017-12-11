@@ -69,7 +69,11 @@ export function DT_CONFIG (data) {
     return {
         dom: 'Blfrtip',
         buttons: [
-            'colvis', 'copy', 'excel', 'pdf', 'csv', 'print'
+            {
+                extend: 'colvis',
+                columns: ':gt(0)'
+            },
+            'copy', 'excel', 'pdf', 'csv', 'print'
         ],
         data: data,
         columns,
