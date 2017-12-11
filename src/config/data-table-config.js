@@ -97,10 +97,6 @@ export function DT_CONFIG (data) {
         ],
         data: data,
         columns,
-        "scrollX": true,
-        fixedHeader: false,
-        // rowReorder: {
-        //     dataSrc: 'index'
-        // }
+        scrollX: true
     }
 };
