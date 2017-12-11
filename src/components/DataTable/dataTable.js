@@ -29,8 +29,15 @@ class Table extends Component {
         let dataTable = $(this.refs.main).DataTable(this.tableConfig(this.tableData));
 
         this.toggle &&  this.tableRowDetailView(dataTable);
+
+        this.searchUI();
+
     }
 
+    searchUI(){
+        $('.dataTables_filter input').attr("placeholder", "Enter search terms here");
+        // $('.dataTables_filter input').parent("label").text(" ");
+    }
 
     /**
      * Table row Toggle view

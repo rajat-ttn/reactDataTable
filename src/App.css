@@ -91,3 +91,12 @@ table {
 .container-header-logo img{
     width:123px;
 }
+
+@media all and (max-width: 767px) {
+    .container-header-nav{
+        margin: 0;
+    }
+    .dataTables_wrapper .dataTables_filter{
+        margin: 10px 0;
+    }
+}
