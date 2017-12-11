@@ -1,5 +1,5 @@
 // import datatable CSS
-import '../../node_modules/datatables.net-dt/css/jquery.dataTables.css';
+import 'datatables.net-dt/css/jquery.dataTables.css';
 import 'datatables.net-buttons-dt/css/buttons.dataTables.css';
 import 'datatables.net-fixedheader-dt/css/fixedHeader.dataTables.css';
 import 'datatables.net-rowreorder-dt/css/rowReorder.dataTables.css';
@@ -20,4 +20,7 @@ import 'pdfmake/build/vfs_fonts'; // required for generating pdf
 
 
 //Import custom CSS
-import '../components/DataTable/dataTable.css';
+import './dataTable.css';
+
+import Table from "./dataTable";
+export default Table;

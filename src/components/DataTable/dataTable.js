@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import '../../config/data-table-utils';
-const data  = require('../../data/tableData.json')['gps_vs_manual'];
 
 class Table extends Component {
     constructor(props){
@@ -34,9 +32,11 @@ class Table extends Component {
 
     }
 
+    /**
+     * Search box UI
+     */
     searchUI(){
         $('.dataTables_filter input').attr("placeholder", "Enter search terms here");
-        // $('.dataTables_filter input').parent("label").text(" ");
     }
 
     /**

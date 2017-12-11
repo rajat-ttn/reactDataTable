@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from './assets/logo.png';
-import Table from './components/DataTable/dataTable';
+import Table from './components/DataTable';
 import NavBar from './components/NavBar/navBar';
 import './assets/fonts/fonts.css';
 import './App.css';
