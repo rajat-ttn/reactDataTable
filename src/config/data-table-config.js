@@ -1,9 +1,10 @@
+import logo from '../assets/logo.png';
 const columns = [
         {
-            "className":      'details-control',
-            "orderable":      false,
-            "data":           null,
-            "defaultContent": ''
+            className: 'details-control',
+            orderable: false,
+            data: null,
+            defaultContent: ''
         },
         {
             title: 'Index',
@@ -59,7 +60,6 @@ const columns = [
         }
 ];
 
-
 columns.map(function(item, index){
     item.width = item.title && item.title.length * 10;
     return item;
@@ -71,9 +71,29 @@ export function DT_CONFIG (data) {
         buttons: [
             {
                 extend: 'colvis',
-                columns: ':gt(0)'
+                columns: ':gt(0)' // ability to toggle all columns except the first one.
             },
-            'copy', 'excel', 'pdf', 'csv', 'print'
+            'copy',
+            'excel', //'pdf',
+            {
+                extend: 'pdfHtml5',
+                // only export columns that are visible
+                exportOptions:{
+                    columns: ':visible'
+                },
+                customize: function ( doc ) {
+                    // Splice the motus logo in after the header, but before the table
+                    doc.content.splice( 0, 0, {
+                        margin: [ 0, 0, 0, 12 ],
+                        alignment: 'center',
+                        image: logo
+                    } );
+                },
+                title:null,
+                filename:'motus report'
+            },
+            'csv',
+            'print'
         ],
         data: data,
         columns,
