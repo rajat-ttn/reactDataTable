@@ -11,7 +11,6 @@ class Table extends Component {
     }
 
     componentDidMount() {
-
         //Table config props should be must
         if(!this.tableConfig){
             return;
@@ -23,7 +22,6 @@ class Table extends Component {
         this.toggle &&  this.tableRowDetailView(dataTable);
 
         this.searchUI();
-
     }
 
     /**
@@ -38,9 +36,7 @@ class Table extends Component {
      * @param dataTable
      */
     tableRowDetailView(dataTable){
-
         let toggle = this.toggle;
-
         // Add event listener for opening and closing details
         $(this.refs.main).on('click', 'td.details-control', function () {
             var tr = $(this).closest('tr');
@@ -76,6 +72,9 @@ class Table extends Component {
         }
     }
 
+    /**
+     * Destroy the datatable
+     */
     componentWillUnmount(){
         $('.data-table-wrapper')
             .find('table')
@@ -83,56 +82,22 @@ class Table extends Component {
             .destroy(true);
     }
 
+    /**
+     * Stop rendering the component
+     * @param nextProps
+     * @returns {boolean}
+     */
     shouldComponentUpdate(nextProps) {
-        if (nextProps.names.length !== this.props.names.length) {
-            reloadTableData(nextProps.names);
-        } else {
-            updateTable(nextProps.names);
-        }
         return false;
     }
 
     render() {
         return (
             <div style={{width:'90%', margin:'0 auto'}}>
-                {/*<button ref="addRow">Add New Row</button>*/}
-                {/*<button ref="replaceData">Replace Data</button>*/}
                 <table ref="main" className="hover row-border">
                 </table>
             </div>);
     }
-}
-
-function updateTable(names) {
-    const table = $('.data-table-wrapper')
-        .find('table')
-        .DataTable();
-    let dataChanged = false;
-    table.rows().every(function () {
-        const oldNameData = this.data();
-        const newNameData = names.find((nameData) => {
-            return nameData.name === oldNameData.name;
-        });
-        if (oldNameData.nickname !== newNameData.nickname) {
-            dataChanged = true;
-            this.data(newNameData);
-        }
-        return true; // RCA esLint configuration wants us to
-                     // return something
-    });
-
-    if (dataChanged) {
-        table.draw();
-    }
-}
-
-function reloadTableData(names) {
-    const table = $('.data-table-wrapper')
-        .find('table')
-        .DataTable();
-    table.clear();
-    table.rows.add(names);
-    table.draw();
 }
 
 export default Table;
